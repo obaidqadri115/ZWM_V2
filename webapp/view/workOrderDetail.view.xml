@@ -95,6 +95,10 @@
 							<core:HTML id="mapsId" content=''></core:HTML>
 						</content>
 					</IconTabFilter>
+					<IconTabFilter text="Measuring Points">
+						<content>
+						</content>
+					</IconTabFilter>
 				</items>
 			</IconTabBar>
 		</content>
