@@ -1,0 +1,108 @@
+<mvc:View xmlns:core="sap.ui.core" xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m" xmlns:u="sap.ui.unified"
+	controllerName="com.acc.ZWM_V2.controller.workOrderDetail" xmlns:html="http://www.w3.org/1999/xhtml">
+	<Page title="Work Order - {WODetModel>/Aufnr}" class="detaisScreens" showNavButton="{device>/isPhone}" navButtonPress="onBacktoWOMaster">
+		<content>
+			<IconTabBar id="iconTabBarId" class="sapUiResponsiveContentPadding" select="onIconTabBarSelect">
+				<items>
+					<IconTabFilter text="Detail" key="detailTab">
+						<content>
+							<core:Fragment fragmentName="com.acc.ZWM_V2.fragments.WO_DetailTab" type="XML"/>
+						</content>
+					</IconTabFilter>
+					<IconTabFilter text="Notification">
+						<content>
+							<core:Fragment fragmentName="com.acc.ZWM_V2.fragments.WO_NotificationTab" type="XML"/>
+						</content>
+					</IconTabFilter>
+					<IconTabFilter text="Operations">
+						<content>
+							<core:Fragment fragmentName="com.acc.ZWM_V2.fragments.WO_OperationsTab" type="XML"/>
+						</content>
+					</IconTabFilter>
+					<IconTabFilter text="Components">
+						<content>
+							<List id="componentListId" items="{WODetModel>/NVHEADERTOCOMPONENTS/results}" itemPress="onComponentListItemPress">
+								<items>
+									<ObjectListItem title="{WODetModel>Maktx}" type="Active" intro="{WODetModel>Ltxa1}" number="{WODetModel>Posnr}" numberUnit="">
+										<firstStatus></firstStatus>
+										<attributes>
+											<ObjectAttribute title="Requirement Quantity" text="{WODetModel>Bdmng}"/>
+											<ObjectAttribute title="Withdrawal Quantity" text="{WODetModel>Enmng}"/>
+										</attributes>
+									</ObjectListItem>
+								</items>
+							</List>
+						</content>
+					</IconTabFilter>
+					<IconTabFilter text="Objects">
+						<content>
+							<List id="objectsListId" items="{WODetModel>/NVHEADERTOOBJECTS/results}">
+								<items>
+									<ObjectListItem title="Object {WODetModel>SermatGuid}" number="" numberUnit="">
+										<firstStatus>
+											<ObjectStatus text="Desc {WODetModel>Equidescr}" state="None"/>
+											<ObjectStatus text="FLOC {WODetModel>FunctLoc}" state="None"/>
+										</firstStatus>
+										<attributes>
+											<ObjectAttribute title="Equipment" text="{WODetModel>Equipment}"/>
+										</attributes>
+									</ObjectListItem>
+								</items>
+							</List>
+						</content>
+					</IconTabFilter>
+					<IconTabFilter text="Attachments" key="documents">
+						<Table items="{WODetModel>/NVHEADERTOATTACHMENTS/results}" inset="false" noDataText="">
+							<headerToolbar>
+								<Toolbar>
+									<ToolbarSpacer/>
+									<u:FileUploader id="fileUploader" sameFilenameAllowed="true" buttonOnly="true" icon="sap-icon://add" iconOnly="true" tooltip="Browse File "
+										change="onFileUpload"/>
+									<!--<Button icon="sap-icon://camera" tooltip="Upload File using Camera" press="onFileUploadByCamera"/>-->
+								</Toolbar>
+							</headerToolbar>
+							<columns>
+								<Column width="auto" minScreenWidth="Phone" demandPopin="true" hAlign="Left">
+									<ObjectIdentifier title="Document No."/>
+								</Column>
+								<Column width="auto" minScreenWidth="Desktop" popinDisplay="Inline" demandPopin="true" hAlign="Left">
+									<ObjectIdentifier title="Name"/>
+								</Column>
+								<Column width="auto" minScreenWidth="Desktop" demandPopin="true" hAlign="Left" popinDisplay="Inline">
+									<ObjectIdentifier title="Type"/>
+								</Column>
+								<Column width="auto" minScreenWidth="Desktop" demandPopin="true" hAlign="Left" popinDisplay="Inline">
+									<ObjectIdentifier title="Description"/>
+								</Column>
+								<Column width="auto" minScreenWidth="Phone" demandPopin="true" hAlign="Right" popinDisplay="Inline"></Column>
+							</columns>
+							<items>
+								<ColumnListItem press="onSelect" type="Navigation">
+									<cells>
+										<Text text="{WODetModel>DocumentNo}"/>
+										<Text text="{WODetModel>Name}"/>
+										<Text text="{WODetModel>Type}"/>
+										<Text text="{WODetModel>Description}"/>
+										<Button icon="sap-icon://delete" tooltip="Delete File" type="Reject"
+											visible="{parts:[{path:'WODetModel>DocumentNo'}],formatter :'.formatter.documentDeleteBtn'}" press="onDecumentDelete"/>
+									</cells>
+								</ColumnListItem>
+							</items>
+						</Table>
+					</IconTabFilter>
+					<IconTabFilter text="Maps">
+						<content height="100%">
+							<core:HTML id="mapsId" content=''></core:HTML>
+						</content>
+					</IconTabFilter>
+				</items>
+			</IconTabBar>
+		</content>
+		<footer>
+			<Toolbar>
+				<ToolbarSpacer/>
+				<Button text="Submit" type="Accept" tooltip="Submit Documents" id="docSubBtnId" press="onSubmitDocuments"></Button>
+			</Toolbar>
+		</footer>
+	</Page>
+</mvc:View>

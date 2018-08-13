@@ -1,0 +1,16 @@
+<mvc:View xmlns:core="sap.ui.core" xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m" controllerName="com.acc.ZWM_V2.controller.MessagePage"
+	xmlns:html="http://www.w3.org/1999/xhtml">
+	<!--<MessagePage description="{i18n>pageDescription}" class="PageBackground" showHeader="false"></MessagePage>-->
+	<Page showHeader="true" class="custPage">
+		<!--class="PageBackground" src="css/energy.jpeg" -->
+		<content >
+			<Image  src="css/energy.JPG"  densityAware="true" width="100%" height="100%"></Image>
+			<!--<core:HTML id="imageFrame" content='' />-->
+		</content>
+		<footer>
+			<Toolbar>
+				<ToolbarSpacer/>
+			</Toolbar>
+		</footer>
+	</Page>
+</mvc:View>

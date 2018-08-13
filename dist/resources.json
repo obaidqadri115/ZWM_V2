@@ -1,0 +1,269 @@
+{
+    "resources": [
+        {
+            "name": "Component-dbg.js",
+            "isDebug": true
+        },
+        {
+            "name": "Component-preload.js",
+            "merged": true
+        },
+        {
+            "name": "Component.js"
+        },
+        {
+            "name": "controller/App-dbg.controller.js",
+            "isDebug": true
+        },
+        {
+            "name": "controller/App.controller.js"
+        },
+        {
+            "name": "controller/Master-dbg.controller.js",
+            "isDebug": true
+        },
+        {
+            "name": "controller/Master.controller.js"
+        },
+        {
+            "name": "controller/MessagePage-dbg.controller.js",
+            "isDebug": true
+        },
+        {
+            "name": "controller/MessagePage.controller.js"
+        },
+        {
+            "name": "controller/workOrderDetail-dbg.controller.js",
+            "isDebug": true
+        },
+        {
+            "name": "controller/workOrderDetail.controller.js"
+        },
+        {
+            "name": "controller/workOrderMaster-dbg.controller.js",
+            "isDebug": true
+        },
+        {
+            "name": "controller/workOrderMaster.controller.js"
+        },
+        {
+            "name": "css/energy.JPG"
+        },
+        {
+            "name": "css/style-dbg.css",
+            "isDebug": true
+        },
+        {
+            "name": "css/style.css"
+        },
+        {
+            "name": "di.code-validation.core_issues.json"
+        },
+        {
+            "name": "extended_runnable_file.html"
+        },
+        {
+            "name": "fragments/TimeEntryDialog.fragment.xml"
+        },
+        {
+            "name": "fragments/WO_DetailTab.fragment.xml"
+        },
+        {
+            "name": "fragments/WO_NotificationTab.fragment.xml"
+        },
+        {
+            "name": "fragments/WO_OperationsTab.fragment.xml"
+        },
+        {
+            "name": "fragments/abs_att_type.fragment.xml"
+        },
+        {
+            "name": "fragments/componentsDialog.fragment.xml"
+        },
+        {
+            "name": "fragments/operationsDialog.fragment.xml"
+        },
+        {
+            "name": "i18n/i18n.properties",
+            "raw": "i18n/i18n.properties"
+        },
+        {
+            "name": "index.html"
+        },
+        {
+            "name": "manifest.json"
+        },
+        {
+            "name": "model/models-dbg.js",
+            "isDebug": true
+        },
+        {
+            "name": "model/models.js"
+        },
+        {
+            "name": "neo-app.json"
+        },
+        {
+            "name": "tmp/Component-preload.js",
+            "merged": true
+        },
+        {
+            "name": "tmp/Component.js"
+        },
+        {
+            "name": "tmp/controller/App.controller.js"
+        },
+        {
+            "name": "tmp/controller/Master.controller.js"
+        },
+        {
+            "name": "tmp/controller/MessagePage.controller.js"
+        },
+        {
+            "name": "tmp/controller/workOrderDetail.controller.js"
+        },
+        {
+            "name": "tmp/controller/workOrderMaster.controller.js"
+        },
+        {
+            "name": "tmp/css/energy.JPG"
+        },
+        {
+            "name": "tmp/css/style.css"
+        },
+        {
+            "name": "tmp/extended_runnable_file.html"
+        },
+        {
+            "name": "tmp/fragments/TimeEntryDialog.fragment.xml"
+        },
+        {
+            "name": "tmp/fragments/WO_DetailTab.fragment.xml"
+        },
+        {
+            "name": "tmp/fragments/WO_NotificationTab.fragment.xml"
+        },
+        {
+            "name": "tmp/fragments/WO_OperationsTab.fragment.xml"
+        },
+        {
+            "name": "tmp/fragments/abs_att_type.fragment.xml"
+        },
+        {
+            "name": "tmp/fragments/componentsDialog.fragment.xml"
+        },
+        {
+            "name": "tmp/fragments/operationsDialog.fragment.xml"
+        },
+        {
+            "name": "tmp/i18n/i18n.properties",
+            "raw": "i18n/i18n.properties"
+        },
+        {
+            "name": "tmp/index.html"
+        },
+        {
+            "name": "tmp/manifest.json"
+        },
+        {
+            "name": "tmp/model/models.js"
+        },
+        {
+            "name": "tmp/util/equipment.png"
+        },
+        {
+            "name": "tmp/util/fl.png"
+        },
+        {
+            "name": "tmp/util/formatter.js"
+        },
+        {
+            "name": "tmp/util/notification.png"
+        },
+        {
+            "name": "tmp/util/timeSheets.png"
+        },
+        {
+            "name": "tmp/util/wo.png"
+        },
+        {
+            "name": "tmp/view/App.view.xml"
+        },
+        {
+            "name": "tmp/view/Master.view.xml"
+        },
+        {
+            "name": "tmp/view/MessagePage.view.xml"
+        },
+        {
+            "name": "tmp/view/workOrderDetail.view.xml"
+        },
+        {
+            "name": "tmp/view/workOrderMaster.view.xml"
+        },
+        {
+            "name": "tmp-dbg/Component.js"
+        },
+        {
+            "name": "tmp-dbg/controller/App.controller.js"
+        },
+        {
+            "name": "tmp-dbg/controller/Master.controller.js"
+        },
+        {
+            "name": "tmp-dbg/controller/MessagePage.controller.js"
+        },
+        {
+            "name": "tmp-dbg/controller/workOrderDetail.controller.js"
+        },
+        {
+            "name": "tmp-dbg/controller/workOrderMaster.controller.js"
+        },
+        {
+            "name": "tmp-dbg/css/style.css"
+        },
+        {
+            "name": "tmp-dbg/model/models.js"
+        },
+        {
+            "name": "tmp-dbg/util/formatter.js"
+        },
+        {
+            "name": "util/equipment.png"
+        },
+        {
+            "name": "util/fl.png"
+        },
+        {
+            "name": "util/formatter-dbg.js",
+            "isDebug": true
+        },
+        {
+            "name": "util/formatter.js"
+        },
+        {
+            "name": "util/notification.png"
+        },
+        {
+            "name": "util/timeSheets.png"
+        },
+        {
+            "name": "util/wo.png"
+        },
+        {
+            "name": "view/App.view.xml"
+        },
+        {
+            "name": "view/Master.view.xml"
+        },
+        {
+            "name": "view/MessagePage.view.xml"
+        },
+        {
+            "name": "view/workOrderDetail.view.xml"
+        },
+        {
+            "name": "view/workOrderMaster.view.xml"
+        }
+    ]
+}

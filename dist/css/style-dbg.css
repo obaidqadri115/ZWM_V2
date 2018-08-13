@@ -1,0 +1,48 @@
+/* Enter your custom styles here */
+
+.PageBackground {
+    background-image: url("38-energy-industry.jpg.img.jpeg") !important;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.titleClass>header>div>div.sapMTitle >span {
+    font-weight: bold;
+}
+
+.nowrap.sapMObjLTitle>span {
+    white-space: nowrap;
+}
+
+.custPage .sapMTitle {
+    color: black;
+    font-weight: bold;
+    font-size: 25px;
+}
+
+.detaisScreens .sapMTitle {
+    color: black;
+    font-weight: bold;
+}
+
+.custPage .sapMPageHeader {
+    background-color: lightgrey !important;
+}
+
+.detaisScreens .sapMPageHeader {
+    background-color: lightgrey !important;
+    /*lightgrey bisque*/
+}
+
+.listMargin .sapMObjLTitle {
+    margin-top: 12px;
+}
+
+.dialogHeaderRed >header {
+    background-color: lightgrey !important
+}
+
+.dialogHeaderRed >header>div>div>h1>span {
+    color: black !important;
+    font-weight: bold !important;
+}
