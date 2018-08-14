@@ -21,9 +21,9 @@
 							<Label design="Bold" text="Hours"/>
 							<TimePicker valueFormat="HH:mm" displayFormat="HH:mm" change="handleChange" minutesStep="15" placeholder="Select the no. of hours worked"/>
 							<Label design="Bold" text="Abs/Att Type" wrapping="true"/>
-							<Input showSuggestion="true" valueHelpOnly="true" showValueHelp="true" valueHelpRequest="handleValueHelpAbsAttType"></Input>
+							<Input id="AbsTypeID" showSuggestion="true" valueHelpOnly="true" showValueHelp="true" valueHelpRequest="handleValueHelpAbsAttType"></Input>
 							<Label design="Bold" text="Activity Type" wrapping="true"/>
-							<Input showSuggestion="true" valueHelpOnly="true" showValueHelp="true" valueHelpRequest="handleValueHelpActivitType"></Input>
+							<Input id="ActivityTypeID" showSuggestion="true" valueHelpOnly="true" showValueHelp="true" valueHelpRequest="handleValueHelpActivitType"></Input>
 							<Label design="Bold" text="Work Order" wrapping="true"/>
 							<Text text="{timeEntryModel>/Aufnr}"/>
 							<Label design="Bold" text="Operation" wrapping="true"/>
