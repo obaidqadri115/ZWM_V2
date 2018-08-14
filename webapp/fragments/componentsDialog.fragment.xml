@@ -19,9 +19,9 @@
 					<Label design="Bold" text="Required Quantity" wrapping="true"/>
 					<Text text="{ComponentDetailModel>/Bdmng}" />
 					<Label design="Bold" text="Plant" wrapping="true"/>
-					<Text text="{ComponentDetailModel>/Werks}-{ComponentDetailModel>/Name1}" />
+					<Text text="{ComponentDetailModel>/Werks} - {ComponentDetailModel>/Name1}" />
 					<Label design="Bold" text="Location" wrapping="true"/>
-					<Text text="{ComponentDetailModel>/Lgort}" />
+					<Text text="{ComponentDetailModel>/Lgort} - {ComponentDetailModel>/Lgobe}" />
 						<core:Title text="" />
 					<Label design="Bold" text="Batch"/>
 					<Text text="{ComponentDetailModel>/Charg}" />

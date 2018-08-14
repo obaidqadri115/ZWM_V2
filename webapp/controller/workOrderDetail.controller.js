@@ -269,7 +269,7 @@ sap.ui.define([
 		onTimeEntryCancel: function () {
 			this.timeEntryDialog.close();
 		},
-		handleValueHelp: function (oEvent) {
+		/*handleValueHelp: function (oEvent) {
 			var that = this;
 			if (!this.absAttTypeDialog) {
 				this.absAttTypeDialog = sap.ui.xmlfragment("com.acc.ZWM_V2.fragments.abs_att_type", this);
@@ -288,7 +288,61 @@ sap.ui.define([
 			});
 
 			this.absAttTypeDialog.open();
+		},*/
+		handleValueHelpAbsAttType: function (oEvent) {
+			if (!this.absAttTypeDialog) {
+				this.absAttTypeDialog = sap.ui.xmlfragment("com.acc.ZWM_V2.fragments.abs_att_type", this);
+			}
+			
+			var data1;
+			var jModel1;
+			var that = this;
+			var odatamodelAbsAttType = new sap.ui.model.odata.ODataModel("/sap/opu/odata/SAP/ZEAM_066_WM_FIORI_APP_SRV");
+			odatamodelAbsAttType.read(
+					"/AtteNAbsTypeF4Set",
+					null, null, false,
+					function(responce) {
+						console.log(responce.results);
+						
+						data1 = responce.results;
+						//JSON.Parse(JSON.stringify(data));
+						jModel1 = new JSONModel(data1);
+						sap.ui.getCore().setModel(jModel1, "WOModelAbsAttType");
+					},
+					function(error) {
+						console.log(error);
+					});
+			
+			 this.absAttTypeDialog.open();
 		},
+		
+		handleValueHelpActivitType: function (oEvent) {
+			if (!this.activityTypeDialog) {
+				this.activityTypeDialog = sap.ui.xmlfragment("com.acc.ZWM_V2.fragments.activity_type", this);
+			}
+			
+			var data1;
+			var jModel1;
+			var that = this;
+			var odatamodelAT = new sap.ui.model.odata.ODataModel("/sap/opu/odata/SAP/ZEAM_066_WM_FIORI_APP_SRV");
+			odatamodelAT.read(
+					"/ActyTypeF4Set",
+					null, null, false,
+					function(responce) {
+						console.log(responce.results);
+						
+						data1 = responce.results;
+						//JSON.Parse(JSON.stringify(data));
+						jModel1 = new JSONModel(data1);
+						sap.ui.getCore().setModel(jModel1, "WOModelActivityType");
+					},
+					function(error) {
+						console.log(error);
+					});
+			
+			 this.activityTypeDialog.open();
+		},
+		
 		onFileUpload: function (oEvent) {
 			var file = oEvent.mParameters.files[0];
 			var data = {
