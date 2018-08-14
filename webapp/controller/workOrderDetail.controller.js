@@ -467,6 +467,24 @@ sap.ui.define([
 				sap.ui.getCore().byId("ActivityTypeID").setValue(items[0].mProperties.title);
 			}
 		},
+		
+		_handleValueHelpSearchActType : function (evt) {
+			var sValue = evt.getParameter("value");
+			var oFilter = new sap.ui.model.Filter(
+				"Ltext",
+				sap.ui.model.FilterOperator.Contains, sValue
+			);
+			evt.getSource().getBinding("items").filter([oFilter]);
+		},
+		
+		_handleValueHelpSearchAbsType : function (evt) {
+			var sValue = evt.getParameter("value");
+			var oFilter = new sap.ui.model.Filter(
+				"Atext",
+				sap.ui.model.FilterOperator.Contains, sValue
+			);
+			evt.getSource().getBinding("items").filter([oFilter]);
+		},
 
 		onFileUpload: function(oEvent) {
 			var file = oEvent.mParameters.files[0];

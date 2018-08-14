@@ -1,5 +1,5 @@
 <core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core">
-	<SelectDialog title="Activity Type" items="{WOModelActivityType>/}" search="_handleValueHelpSearch"
+	<SelectDialog title="Activity Type" items="{WOModelActivityType>/}" search="_handleValueHelpSearchActType"
 		confirm="_handleValueHelpCloseActType" cancel="_handleValueHelpCloseActType">
 		<StandardListItem  title="{WOModelActivityType>Ltext}" description="{WOModelActivityType>Lstar}"/>
 	</SelectDialog>
