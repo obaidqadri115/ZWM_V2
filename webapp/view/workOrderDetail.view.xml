@@ -26,8 +26,8 @@
 									<ObjectListItem title="{WODetModel>Maktx}" type="Active" intro="{WODetModel>Ltxa1}" number="{WODetModel>Posnr}" numberUnit="">
 										<firstStatus></firstStatus>
 										<attributes>
-											<ObjectAttribute title="Requirement Quantity" text="{WODetModel>Bdmng}"/>
-											<ObjectAttribute title="Withdrawal Quantity" text="{WODetModel>Enmng}"/>
+											<ObjectAttribute title="Required Quantity" text="{WODetModel>Bdmng}"/>
+											<ObjectAttribute title="Withdrawn Quantity" text="{WODetModel>Enmng}"/>
 										</attributes>
 									</ObjectListItem>
 								</items>
