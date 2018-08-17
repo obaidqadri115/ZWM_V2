@@ -154,6 +154,7 @@ sap.ui.define([
 
 			var absType = sap.ui.getCore().byId("AbsTypeID").getValue();
 			var actType = sap.ui.getCore().byId("ActivityTypeID").getValue();
+			var hoursWorked = sap.ui.getCore().byId("timepickerID").getValue();
 
 			if (absType === "" && absType.length === 0) {
 				that.getOwnerComponent().bDialog.close();
@@ -169,7 +170,7 @@ sap.ui.define([
 				Aufnr: selModel.Aufnr,
 				Vornr: selModel.Vornr,
 				NVOPERATIONTOOPTIMES: [{
-					"Ismnw": "10",
+					"Ismnw": hoursWorked,
 					"Awart": selModelAbsType.getData()[1],
 					"Atext": selModelAbsType.getData()[0],
 					"Larnt": selModelActType.getData()[1],

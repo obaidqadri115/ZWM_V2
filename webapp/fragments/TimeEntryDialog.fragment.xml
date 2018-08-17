@@ -19,7 +19,7 @@
 						singleContainerFullSize="true">
 						<f:content>
 							<Label design="Bold" text="Hours"/>
-							<TimePicker valueFormat="HH:mm" displayFormat="HH:mm" change="handleChange" minutesStep="15" placeholder="Select the no. of hours worked"/>
+							<TimePicker id="timepickerID" valueFormat="HH.m" displayFormat="HH:mm" change="handleChange" minutesStep="15" placeholder="Select the no. of hours worked"/>
 							<Label design="Bold" text="Abs/Att Type" wrapping="true"/>
 							<Input id="AbsTypeID" showSuggestion="true" valueHelpOnly="true" showValueHelp="true" valueHelpRequest="handleValueHelpAbsAttType"></Input>
 							<Label design="Bold" text="Activity Type" wrapping="true"/>
