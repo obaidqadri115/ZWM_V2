@@ -170,7 +170,7 @@ sap.ui.define([
 				Aufnr: selModel.Aufnr,
 				Vornr: selModel.Vornr,
 				NVOPERATIONTOOPTIMES: [{
-					"Ismnw": hoursWorked,
+					"Ismnw2": hoursWorked,
 					"Awart": selModelAbsType.getData()[1],
 					"Atext": selModelAbsType.getData()[0],
 					"Larnt": selModelActType.getData()[1],
