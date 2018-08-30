@@ -17,6 +17,8 @@
 			<Text text="{WODetModel>/TplnrDesc}"/>
 			<Label design="Bold" text="Equipment" wrapping="true"/>
 			<Text text="{WODetModel>/EqunrQmDesc}"/>
+			<Label design="Bold" text="User Status" wrapping="true"/>
+			<Button visible="true" text="" press=""/>
 			<Label design="Bold" text="Notes"/>
 			<VBox>
 				<items>

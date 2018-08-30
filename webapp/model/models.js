@@ -15,24 +15,30 @@ sap.ui.define([
 			return [{
 				"ID": "1",
 				"Type": "Work Orders",
-				"icon":"util/wo.png"
+				/*"icon":"util/wo.png"*/
+				"icon":$.sap.getModulePath("com.acc.ZWM_V2", "/util/wo.png")
 			}, {
 				"ID": "2",
 				"Type": "Notifications",
-				"icon":"util/notification.png"
+				"icon":$.sap.getModulePath("com.acc.ZWM_V2", "/util/notification.png")
 			}, {
 				"ID": "3",
 				"Type": "Timesheets",
-				"icon":"util/timeSheets.png"
+				"icon":$.sap.getModulePath("com.acc.ZWM_V2", "/util/timeSheets.png")
 			}, {
 				"ID": "4",
 				"Type": "Functional Location",
-				"icon":"util/fl.png"
+				"icon":$.sap.getModulePath("com.acc.ZWM_V2", "/util/fl.png")
 			}, {
 				"ID": "5",
 				"Type": "Equipment",
-				"icon":"util/equipment.png"
+				"icon":$.sap.getModulePath("com.acc.ZWM_V2", "/util/equipment.png")
 			}];
+		},
+		backgroundImage:function(){
+			return {
+				image:$.sap.getModulePath("com.acc.ZWM_V2", "/css/energy.JPG")
+			};
 		},
 		references:function(viewName,ref){
 			/*if(!this["viewName"]){

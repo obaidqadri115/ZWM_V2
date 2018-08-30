@@ -6,6 +6,8 @@
 			<Label design="Bold" text="Notification"/>
 			<Text text="{WODetModel>/Qmnum}"/>
 			<Label design="Bold" text="Type" wrapping="true"/>
+			<Text text="{WODetModel>/Qmart}"/>
+			<Label design="Bold" text="Description" wrapping="true"/>
 			<Text text="{WODetModel>/Qmtxt}"/>
 			<Label design="Bold" text="FuncLoc" wrapping="true"/>
 			<Text text="{WODetModel>/TplnrQmDesc}"/>

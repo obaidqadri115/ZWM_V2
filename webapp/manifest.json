@@ -76,9 +76,11 @@
 			}
 		},
 		"resources": {
-			"css": [{
-				"uri": "css/style.css"
-			}]
+			"css": [
+				{
+					"uri": "css/style.css"
+				}
+			]
 		},
 		"routing": {
 			"config": {
@@ -96,50 +98,57 @@
 					]
 				}
 			},
-			"routes": [{
-				"pattern": "Master",
-				"name": "Master",
-				"target": [
-					"MessagePage",
-					"Master"
-				]
-			}, {
-				"pattern": "MessagePage",
-				"name": "MessagePage",
-				"target": [
-					"Master",
-					"MessagePage"
-				]
-			}, {
-				"pattern": "workOrderMaster",
-				"name": "workOrderMaster",
-				"target": [
-					"noDataPage",
-					"workOrderDetail",
-					"workOrderMaster"
-				]
-			}, {
-				"pattern": "workOrderDetail/{context}",
-				"name": "workOrderDetail",
-				"target": [
-					"workOrderMaster",
-					"workOrderDetail"
-				]
-			}, {
-				"pattern": "noDataPage",
-				"name": "noDataPage",
-				"target": [
-					"workOrderMaster",
-					"noDataPage"
-				]
-			}, {
-				"pattern": "",
-				"name": "default",
-				"target": [
-					"MessagePage",
-					"Master"
-				]
-			}],
+			"routes": [
+				{
+					"pattern": "Master",
+					"name": "Master",
+					"target": [
+						"MessagePage",
+						"Master"
+					]
+				},
+				{
+					"pattern": "MessagePage",
+					"name": "MessagePage",
+					"target": [
+						"Master",
+						"MessagePage"
+					]
+				},
+				{
+					"pattern": "workOrderMaster",
+					"name": "workOrderMaster",
+					"target": [
+						"noDataPage",
+						"workOrderDetail",
+						"workOrderMaster"
+					]
+				},
+				{
+					"pattern": "workOrderDetail/{context}",
+					"name": "workOrderDetail",
+					"target": [
+						"workOrderMaster",
+						"workOrderDetail"
+					]
+				},
+				{
+					"pattern": "noDataPage",
+					"name": "noDataPage",
+					"target": [
+						"workOrderMaster",
+						"noDataPage"
+					]
+				},
+				{
+					"pattern": "",
+					"name": "default",
+					"target": [
+						"MessagePage",
+						"Master"
+					]
+				}
+			],
 			"targets": {
 				"Master": {
 					"controlAggregation": "masterPages",
@@ -181,6 +190,10 @@
 	},
 	"sap.platform.hcp": {
 		"uri": "webapp",
+		"_version": "1.1.0"
+	},
+	"sap.platform.abap": {
+		"uri": "/sap/bc/ui5_ui5/sap/zwmfioriapp/webapp",
 		"_version": "1.1.0"
 	}
 }

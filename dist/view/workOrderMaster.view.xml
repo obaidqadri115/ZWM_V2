@@ -11,7 +11,7 @@
 		</subHeader>
 		<content>
 			<List backgroundDesign="Translucent" id="workorderListId" showSeparators="All" items="{path:'workOrders>/', templateShareable:true}" mode="SingleSelectMaster"
-				itemPress="onListItemPress" updateFinished="onUpdateFinish">
+				itemPress="onListItemPress" noDataText="No Work Orders" updateFinished="onUpdateFinish">
 				<items>
 					<ObjectListItem title="{workOrders>Aufnr}" type="Active">
 						<firstStatus>

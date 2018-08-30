@@ -33,6 +33,13 @@
             "name": "controller/MessagePage.controller.js"
         },
         {
+            "name": "controller/noDataPage-dbg.controller.js",
+            "isDebug": true
+        },
+        {
+            "name": "controller/noDataPage.controller.js"
+        },
+        {
             "name": "controller/workOrderDetail-dbg.controller.js",
             "isDebug": true
         },
@@ -78,6 +85,9 @@
             "name": "fragments/abs_att_type.fragment.xml"
         },
         {
+            "name": "fragments/activity_type.fragment.xml"
+        },
+        {
             "name": "fragments/componentsDialog.fragment.xml"
         },
         {
@@ -120,6 +130,9 @@
             "name": "tmp/controller/MessagePage.controller.js"
         },
         {
+            "name": "tmp/controller/noDataPage.controller.js"
+        },
+        {
             "name": "tmp/controller/workOrderDetail.controller.js"
         },
         {
@@ -148,6 +161,9 @@
         },
         {
             "name": "tmp/fragments/abs_att_type.fragment.xml"
+        },
+        {
+            "name": "tmp/fragments/activity_type.fragment.xml"
         },
         {
             "name": "tmp/fragments/componentsDialog.fragment.xml"
@@ -196,6 +212,9 @@
             "name": "tmp/view/MessagePage.view.xml"
         },
         {
+            "name": "tmp/view/noDataPage.view.xml"
+        },
+        {
             "name": "tmp/view/workOrderDetail.view.xml"
         },
         {
@@ -212,6 +231,9 @@
         },
         {
             "name": "tmp-dbg/controller/MessagePage.controller.js"
+        },
+        {
+            "name": "tmp-dbg/controller/noDataPage.controller.js"
         },
         {
             "name": "tmp-dbg/controller/workOrderDetail.controller.js"
@@ -258,6 +280,9 @@
         },
         {
             "name": "view/MessagePage.view.xml"
+        },
+        {
+            "name": "view/noDataPage.view.xml"
         },
         {
             "name": "view/workOrderDetail.view.xml"

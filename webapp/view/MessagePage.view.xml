@@ -4,7 +4,7 @@
 	<Page showHeader="true" class="custPage">
 		<!--class="PageBackground" src="css/energy.jpeg" -->
 		<content >
-			<Image  src="css/energy.JPG"  densityAware="true" width="100%" height="100%"></Image>
+			<Image  src="{messagePageModel>/image}"  densityAware="true" width="100%" height="100%"></Image>
 			<!--<core:HTML id="imageFrame" content='' />-->
 		</content>
 		<footer>

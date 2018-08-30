@@ -26,6 +26,7 @@ sap.ui.define([
 					//that.getOwnerComponent().bDialog.close();
 				},
 				error: function (error) {
+					that.showNoDataPage();
 					that.getOwnerComponent().bDialog.close();
 				}
 			});
@@ -37,19 +38,30 @@ sap.ui.define([
 				oList.setSelectedItem(oFirstListItem);
 				oList.fireItemPress({
 					listItem: oFirstListItem,
-					srcControl:oFirstListItem
+					srcControl: oFirstListItem
 				});
 				this.getOwnerComponent().bDialog.close();
-			}else{
+			} else {
 				this.getOwnerComponent().bDialog.close();
 			}
 
 		},
 		onListItemPress: function (oEvent) {
 			var path = oEvent.mParameters.listItem.getBindingContextPath("workOrders");
-			this.getRouter().navTo("workOrderDetail", {
-				context:path.split("/")[1]
-			});
+			var items = oEvent.oSource.getItems();
+			if (items.length == 0) {
+				this.showNoDataPage();
+			} else {
+				this.getRouter().navTo("workOrderDetail", {
+					context: path.split("/")[1]
+				});
+			}
+		},
+		showNoDataPage: function () {
+			if (!sap.ui.Device.system.phone) {
+				this.getRouter().navTo("noDataPage", {});
+			}
+
 		},
 		dateFormatter: function (value1) {
 			var oDateFormat = sap.ui.core.format.DateFormat.getDateInstance({
@@ -58,18 +70,18 @@ sap.ui.define([
 			var date = oDateFormat.format(new Date(value1));
 			return date;
 		},
-		onSearchByWorkOrder:function(oEvt){
-            var aFilters = [];
-            var sQuery = oEvt.getSource().getValue();
-            if (sQuery.length > 0) {
-                if (!isNaN(sQuery)) { // ClaimAmt claimNo
-                    var filter1 = new sap.ui.model.Filter("Aufnr", sap.ui.model.FilterOperator.Contains, sQuery);
-                    aFilters.push(filter1);
-                }
-            }
-            var list = this.getView().byId("workorderListId");
-            var binding = list.getBinding("items");
-            binding.filter(aFilters);
+		onSearchByWorkOrder: function (oEvt) {
+			var aFilters = [];
+			var sQuery = oEvt.getSource().getValue();
+			if (sQuery.length > 0) {
+				if (!isNaN(sQuery)) { // ClaimAmt claimNo
+					var filter1 = new sap.ui.model.Filter("Aufnr", sap.ui.model.FilterOperator.Contains, sQuery);
+					aFilters.push(filter1);
+				}
+			}
+			var list = this.getView().byId("workorderListId");
+			var binding = list.getBinding("items");
+			binding.filter(aFilters);
 		},
 		piority: function (val) {
 			if (val) {

@@ -1,16 +1,16 @@
 sap.ui.define([
 	"sap/ui/core/mvc/Controller", "sap/ui/model/json/JSONModel", "com/acc/ZWM_V2/model/models", "sap/m/MessageBox",
 	"com/acc/ZWM_V2/util/formatter"
-], function (Controller, JSONModel, models, MessageBox, formatter) {
+], function(Controller, JSONModel, models, MessageBox, formatter) {
 	"use strict";
 
 	return Controller.extend("com.acc.ZWM_V2.controller.workOrderDetail", {
 		formatter: formatter,
-		onInit: function () {
+		onInit: function() {
 			this.oModel = this.getOwnerComponent().getModel();
 			this.getOwnerComponent().getRouter().getRoute("workOrderDetail").attachPatternMatched(this.onRouteMatched, this);
 		},
-		onRouteMatched: function (event) {
+		onRouteMatched: function(event) {
 			models.references("workOrderDetail", this);
 			if (event.mParameters.arguments) {
 				this.byId("docSubBtnId").setVisible(false);
@@ -20,7 +20,7 @@ sap.ui.define([
 					enable: false,
 					btnVisibility: false,
 					editBtn: true
-				}; 
+				};
 				this.getView().getModel("device").setData({
 					isPhone: sap.ui.Device.system.phone || sap.ui.Device.system.tablet
 				});
@@ -37,18 +37,18 @@ sap.ui.define([
 			}
 
 		},
-		bindData: function (index) {
+		bindData: function(index) {
 			this.MasterRef = models.getReferences("workOrderMaster");
 			var data = this.MasterRef.getView().getModel("workOrders").getData()[index];
 			this.getView().setModel(new JSONModel(data), "WODetModel");
 		},
-		onDetailEditPress: function (oEvent) {
+		onDetailEditPress: function(oEvent) {
 			this.getView().getModel("detailEditNoteModel").setProperty("/enable", true);
 			this.getView().getModel("detailEditNoteModel").setProperty("/btnVisibility", true);
 			this.getView().getModel("detailEditNoteModel").setProperty("/editBtn", false);
 		},
 
-		onSaveDetailNotes: function (oEvent) {
+		onSaveDetailNotes: function(oEvent) {
 			var that = this;
 			this.getOwnerComponent().bDialog.open();
 			var selModel = this.getView().getModel("WODetModel").getData();
@@ -69,7 +69,7 @@ sap.ui.define([
 			};
 			var path = "/HeaderSet";
 			this.oModel.create(path, data, {
-				success: function (odata, responce) {
+				success: function(odata, responce) {
 					/*var a = $(responce.headers["sap-message"]);
 					var msg = a.find("message").eq(0).text();
 					var severity = a.find("severity").eq(0).text();*/
@@ -86,7 +86,7 @@ sap.ui.define([
 					that.byId("detailNotesId").setValue("");
 					if (severity.toLowerCase() === "info") {
 						MessageBox.information(msg, {
-							onClose: function (sAction) {
+							onClose: function(sAction) {
 								that.onBacktoWOMaster();
 								that.MasterRef.bindWorkOrderList();
 							}
@@ -94,7 +94,7 @@ sap.ui.define([
 						that.getView().getModel("detailEditNoteModel").setData(detailEditNoteData);
 					} else if (severity.toLowerCase() === "success") {
 						MessageBox.success(msg, {
-							onClose: function (sAction) {
+							onClose: function(sAction) {
 								that.onBacktoWOMaster();
 								that.MasterRef.bindWorkOrderList();
 							}
@@ -102,7 +102,7 @@ sap.ui.define([
 						that.getView().getModel("detailEditNoteModel").setData(detailEditNoteData);
 					} else if (severity.toLowerCase() === "error") {
 						MessageBox.error(msg, {
-							onClose: function (sAction) {
+							onClose: function(sAction) {
 
 							}
 						});
@@ -110,10 +110,10 @@ sap.ui.define([
 					}
 
 				},
-				error: function (error) {
+				error: function(error) {
 					var msg = error.statusText;
 					MessageBox.error(msg + ": contact System Administator", {
-						onClose: function (sAction) {
+						onClose: function(sAction) {
 
 						}
 					});
@@ -128,12 +128,102 @@ sap.ui.define([
 			});
 
 		},
-		onCancelDetailNotes: function (oEvent) {
+		onCancelDetailNotes: function(oEvent) {
 			this.getView().getModel("detailEditNoteModel").setProperty("/editBtn", true);
 			this.getView().getModel("detailEditNoteModel").setProperty("/enable", false);
 			this.getView().getModel("detailEditNoteModel").setProperty("/btnVisibility", false);
 		},
-		dateFormatter: function (value1, value2) {
+
+		onTimeEntrySave: function(oEvent) {
+
+			if (!this.timeEntryDialog) {
+				this.timeEntryDialog = sap.ui.xmlfragment("com.acc.ZWM_V2.fragments.TimeEntryDialog", this);
+				this.timeEntryDialog.setModel(new JSONModel({}), "timeEntryModel");
+			}
+			var data = this.operDialog.getModel("operationDetailModel").getData();
+			this.timeEntryDialog.getModel("timeEntryModel").setData(data);
+			/*sap.ui.getCore().byId("timeEntryFId").bindElement("/");
+			this.timeEntryDialog.open();*/
+
+			var that = this;
+			this.getOwnerComponent().bDialog.open();
+
+			var selModel = this.timeEntryDialog.getModel("timeEntryModel").getData();
+			var selModelActType = sap.ui.getCore().getModel("WOselectedItemModelActType");
+			var selModelAbsType = sap.ui.getCore().getModel("WOselectedItemModelAbsType");
+
+			var absType = sap.ui.getCore().byId("AbsTypeID").getValue();
+			var actType = sap.ui.getCore().byId("ActivityTypeID").getValue();
+			var hoursWorked = sap.ui.getCore().byId("timepickerID").getValue();
+
+			if (absType === "" && absType.length === 0) {
+				that.getOwnerComponent().bDialog.close();
+				sap.m.MessageToast.show("Notes should not be empty");
+				return;
+			}
+			if (actType === "" && actType.length === 0) {
+				that.getOwnerComponent().bDialog.close();
+				sap.m.MessageToast.show("Notes should not be empty");
+				return;
+			}
+			var data1 = {
+				Aufnr: selModel.Aufnr,
+				Vornr: selModel.Vornr,
+				NVOPERATIONTOOPTIMES: [{
+					"Ismnw2": hoursWorked,
+					"Awart": selModelAbsType.getData()[1],
+					"Atext": selModelAbsType.getData()[0],
+					"Larnt": selModelActType.getData()[1],
+					"Ltext": selModelActType.getData()[0]
+				}]
+			};
+			var path = "/OperationsSet";
+			this.oModel.create(path, data1, {
+				success: function(odata, responce) {
+
+					var obj = JSON.parse(responce.headers["sap-message"]);
+					var msg = obj.message;
+					var severity = obj.severity;
+					that.getOwnerComponent().bDialog.close();
+
+					if (severity.toLowerCase() === "info") {
+						MessageBox.information(msg, {
+							onClose: function(sAction) {
+								that.onBacktoWOMaster();
+								that.MasterRef.bindWorkOrderList();
+							}
+						});
+					} else if (severity.toLowerCase() === "success") {
+						MessageBox.success(msg, {
+							onClose: function(sAction) {
+								that.onBacktoWOMaster();
+								that.MasterRef.bindWorkOrderList();
+							}
+						});
+					} else if (severity.toLowerCase() === "error") {
+						MessageBox.error(msg, {
+							onClose: function(sAction) {
+
+							}
+						});
+						return;
+					}
+
+				},
+				error: function(error) {
+					var msg = error.statusText;
+					MessageBox.error(msg + ": contact System Administator", {
+						onClose: function(sAction) {
+
+						}
+					});
+					that.getOwnerComponent().bDialog.close();
+				}
+			});
+
+		},
+
+		dateFormatter: function(value1, value2) {
 			var oDateFormat = sap.ui.core.format.DateFormat.getDateInstance({
 				pattern: "dd/MM/yyyy"
 			});
@@ -141,7 +231,7 @@ sap.ui.define([
 			return date;
 		},
 		/* on Selection of components List Item */
-		onComponentListItemPress: function (oEvent) {
+		onComponentListItemPress: function(oEvent) {
 			if (!this.compDialog) {
 				this.compDialog = sap.ui.xmlfragment("com.acc.ZWM_V2.fragments.componentsDialog", this);
 			}
@@ -152,7 +242,7 @@ sap.ui.define([
 		},
 
 		/* on Selection of Operations List Item*/
-		onOperationsListItemPress: function (oEvent) {
+		onOperationsListItemPress: function(oEvent) {
 			var data = {
 				enable: false,
 				btnVisibility: false,
@@ -168,12 +258,12 @@ sap.ui.define([
 			sap.ui.getCore().byId("operationsSFId").bindElement("/");
 			this.operDialog.open();
 		},
-		onOperationsEditPress: function () {
+		onOperationsEditPress: function() {
 			this.operDialog.getModel("operationsNotesData").setProperty("/editBtn", false);
 			this.operDialog.getModel("operationsNotesData").setProperty("/enable", true);
 			this.operDialog.getModel("operationsNotesData").setProperty("/btnVisibility", true);
 		},
-		onSaveOperationsNotes: function () {
+		onSaveOperationsNotes: function() {
 			var oData = this.operDialog.getModel("operationDetailModel").getData();
 			var that = this;
 			this.getOwnerComponent().bDialog.open();
@@ -195,7 +285,7 @@ sap.ui.define([
 			};
 			var path = "/OperationsSet";
 			this.oModel.create(path, data, {
-				success: function (odata, responce) {
+				success: function(odata, responce) {
 					/*var a = $(responce.headers["sap-message"]);
 					var msg = a.find("message").eq(0).text();
 					var severity = a.find("severity").eq(0).text();*/
@@ -212,7 +302,7 @@ sap.ui.define([
 
 					if (severity.toLowerCase() === "info") {
 						MessageBox.information(msg, {
-							onClose: function (sAction) {
+							onClose: function(sAction) {
 								that.onBacktoWOMaster();
 								that.MasterRef.bindWorkOrderList();
 							}
@@ -221,7 +311,7 @@ sap.ui.define([
 						that.operDialog.close();
 					} else if (severity.toLowerCase() === "success") {
 						MessageBox.success(msg, {
-							onClose: function (sAction) {
+							onClose: function(sAction) {
 								that.onBacktoWOMaster();
 								that.MasterRef.bindWorkOrderList();
 							}
@@ -230,7 +320,7 @@ sap.ui.define([
 						that.operDialog.close();
 					} else if (severity.toLowerCase() === "error") {
 						MessageBox.error(msg, {
-							onClose: function (sAction) {
+							onClose: function(sAction) {
 
 							}
 						});
@@ -238,10 +328,10 @@ sap.ui.define([
 					}
 
 				},
-				error: function (error) {
+				error: function(error) {
 					var msg = error.statusText;
 					MessageBox.error(msg + ": contact System Administator", {
-						onClose: function (sAction) {
+						onClose: function(sAction) {
 
 						}
 					});
@@ -256,7 +346,7 @@ sap.ui.define([
 			});
 
 		},
-		onOperationFinish: function () {
+		onOperationFinish: function() {
 			if (!this.timeEntryDialog) {
 				this.timeEntryDialog = sap.ui.xmlfragment("com.acc.ZWM_V2.fragments.TimeEntryDialog", this);
 				this.timeEntryDialog.setModel(new JSONModel({}), "timeEntryModel");
@@ -266,18 +356,21 @@ sap.ui.define([
 			sap.ui.getCore().byId("timeEntryFId").bindElement("/");
 			this.timeEntryDialog.open();
 		},
-		onTimeEntryCancel: function () {
+		onTimeEntryCancel: function() {
 			this.timeEntryDialog.close();
 		},
-		handleValueHelp: function (oEvent) {
+		/*handleValueHelp: function (oEvent) {
+			var that = this;
 			if (!this.absAttTypeDialog) {
 				this.absAttTypeDialog = sap.ui.xmlfragment("com.acc.ZWM_V2.fragments.abs_att_type", this);
+				sap.ui.getCore().setModel(new JSONModel([]), "absAttModel");
 			}
-
+			sap.ui.getCore().getModel("absAttModel").setData([]);
 			var path = "/ActyTypeF4Set";
 			this.oModel.read(path, true, {
 				success: function (odata, responce) {
 					debugger;
+					sap.ui.getCore().getModel("absAttModel").setData(odata.results);
 				},
 				error: function (error) {
 					debugger;
@@ -285,8 +378,116 @@ sap.ui.define([
 			});
 
 			this.absAttTypeDialog.open();
+		},*/
+		handleValueHelpAbsAttType: function(oEvent) {
+			if (!this.absAttTypeDialog) {
+				this.absAttTypeDialog = sap.ui.xmlfragment("com.acc.ZWM_V2.fragments.abs_att_type", this);
+			}
+
+			var data1;
+			var jModel1;
+			var that = this;
+			var odatamodelAbsAttType = new sap.ui.model.odata.ODataModel("/sap/opu/odata/SAP/ZEAM_066_WM_FIORI_APP_SRV");
+			odatamodelAbsAttType.read(
+				"/AtteNAbsTypeF4Set",
+				null, null, false,
+				function(responce) {
+					console.log(responce.results);
+
+					data1 = responce.results;
+					//JSON.Parse(JSON.stringify(data));
+					jModel1 = new JSONModel(data1);
+					sap.ui.getCore().setModel(jModel1, "WOModelAbsAttType");
+				},
+				function(error) {
+					console.log(error);
+				});
+
+			this.absAttTypeDialog.open();
 		},
-		onFileUpload: function (oEvent) {
+
+		handleValueHelpActivitType: function(oEvent) {
+			if (!this.activityTypeDialog) {
+				this.activityTypeDialog = sap.ui.xmlfragment("com.acc.ZWM_V2.fragments.activity_type", this);
+			}
+
+			var data1;
+			var jModel1;
+			var that = this;
+			var odatamodelAT = new sap.ui.model.odata.ODataModel("/sap/opu/odata/SAP/ZEAM_066_WM_FIORI_APP_SRV");
+			odatamodelAT.read(
+				"/ActyTypeF4Set",
+				null, null, false,
+				function(responce) {
+					console.log(responce.results);
+
+					data1 = responce.results;
+					//JSON.Parse(JSON.stringify(data));
+					jModel1 = new JSONModel(data1);
+					sap.ui.getCore().setModel(jModel1, "WOModelActivityType");
+				},
+				function(error) {
+					console.log(error);
+				});
+
+			this.activityTypeDialog.open();
+		},
+
+		_handleValueHelpCloseAbsType: function(oEvent) {
+			var items = oEvent.mParameters.selectedItems;
+			if (items) {
+				/*var modelData = this.getView().getModel("WODetModel").getData();
+				modelData.NVHEADERTOATTACHMENTS.results.push(file);
+				this.getView().getModel("WODetModel").refresh();*/
+
+				var description = items[0].mProperties.description;
+				var title = items[0].mProperties.title;
+
+				var selectedItemdata = [title, description];
+
+				var selectedItemJSONModel = new JSONModel(selectedItemdata);
+				sap.ui.getCore().setModel(selectedItemJSONModel, "WOselectedItemModelAbsType");
+
+				sap.ui.getCore().byId("AbsTypeID").setValue(items[0].mProperties.title);
+
+			}
+		},
+
+		_handleValueHelpCloseActType: function(oEvent) {
+			var items = oEvent.mParameters.selectedItems;
+			if (items) {
+
+				var description = items[0].mProperties.description;
+				var title = items[0].mProperties.title;
+
+				var selectedItemdata = [title, description];
+
+				var selectedItemJSONModel = new JSONModel(selectedItemdata);
+				sap.ui.getCore().setModel(selectedItemJSONModel, "WOselectedItemModelActType");
+
+				sap.ui.getCore().byId("ActivityTypeID").setValue(items[0].mProperties.title);
+			}
+		},
+		
+		_handleValueHelpSearchActType : function (evt) {
+			var sValue = evt.getParameter("value");
+			var oFilter = new sap.ui.model.Filter(
+				"Ltext",
+				sap.ui.model.FilterOperator.Contains, sValue
+			);
+			evt.getSource().getBinding("items").filter([oFilter]);
+		},
+		
+		_handleValueHelpSearchAbsType : function (evt) {
+			var sValue = evt.getParameter("value");
+			var oFilter = new sap.ui.model.Filter(
+				"Atext",
+				sap.ui.model.FilterOperator.Contains, sValue
+			);
+			evt.getSource().getBinding("items").filter([oFilter]);
+		},
+
+		onFileUpload: function(oEvent) {
 			var file = oEvent.mParameters.files[0];
 			var data = {
 				Name: file.name,
@@ -299,12 +500,12 @@ sap.ui.define([
 			}
 
 		},
-		onDecumentDelete: function (oEvent) {
+		onDecumentDelete: function(oEvent) {
 			var index = oEvent.oSource.oParent.oParent.indexOfItem(oEvent.oSource.oParent);
 			this.getView().getModel("WODetModel").oData.NVHEADERTOATTACHMENTS.results.splice(index, 1);
 			this.getView().getModel("WODetModel").refresh();
 		},
-		onIconTabBarSelect: function (oEvent) {
+		onIconTabBarSelect: function(oEvent) {
 			var key = oEvent.oSource.getSelectedKey();
 			if (key === "documents") {
 				this.byId("docSubBtnId").setVisible(true);
@@ -313,7 +514,7 @@ sap.ui.define([
 			}
 		},
 
-		onSelect1: function (e) {
+		onSelect1: function(e) {
 			if (!this.docDialog) {
 				var that = this;
 				this.docDialog = new sap.m.Dialog({
@@ -326,7 +527,7 @@ sap.ui.define([
 					beginButton: new sap.m.Button({
 						text: 'Close',
 						type: "Reject",
-						press: function () {
+						press: function() {
 							that.docDialog.close();
 						}
 					})
@@ -345,16 +546,16 @@ sap.ui.define([
 			}
 			var path = "/AttDownloadSet(Objid='12EFDB6B857E1EE893BD907E632CC5AB')/$value";
 			this.oModel.read(path, true, {
-				success: function (odata, responce) {
+				success: function(odata, responce) {
 					debugger;
 				},
-				error: function (error) {
+				error: function(error) {
 					debugger;
 				}
 			});
 
 		},
-		onSelect: function (e) {
+		onSelect: function(e) {
 			debugger;
 			var bObj = e.oSource.getBindingContext("WODetModel").getObject().Objid;
 			if (bObj) {
@@ -371,37 +572,37 @@ sap.ui.define([
 					})*/
 			}
 		},
-		onFileUploadByCamera: function () {
+		onFileUploadByCamera: function() {
 			var options = {
 				quality: 10,
 				destinationType: navigator.camera.DestinationType.DATA_URL
 			};
-			navigator.camera.getPicture(function (resp) {
+			navigator.camera.getPicture(function(resp) {
 				sap.m.MessageToast.show("Success");
-			}, function (error) {
+			}, function(error) {
 				sap.m.MessageToast.show("Error");
 			}, options);
 		},
-		onCancelOperationsNotes: function (oEvent) {
+		onCancelOperationsNotes: function(oEvent) {
 			this.operDialog.getModel("operationsNotesData").setProperty("/editBtn", true);
 			this.operDialog.getModel("operationsNotesData").setProperty("/enable", false);
 			this.operDialog.getModel("operationsNotesData").setProperty("/btnVisibility", false);
 		},
-		onCloseOperationsDialog: function () {
+		onCloseOperationsDialog: function() {
 			this.operDialog.close();
 		},
-		onCloseCompDialog: function () {
+		onCloseCompDialog: function() {
 			this.compDialog.close();
 		},
-		onBacktoWOMaster: function () {
+		onBacktoWOMaster: function() {
 			//if (sap.ui.Device.system.phone) {
 			this.getRouter().navTo("workOrderMaster", {});
 			//}
 		},
-		getRouter: function () {
+		getRouter: function() {
 			return sap.ui.core.UIComponent.getRouterFor(this);
 		},
-		onExit: function () {
+		onExit: function() {
 			if (this.operDialog) {
 				this.operDialog.destroy();
 			}
