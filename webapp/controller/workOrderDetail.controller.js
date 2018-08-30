@@ -468,8 +468,8 @@ sap.ui.define([
 				sap.ui.getCore().byId("ActivityTypeID").setValue(items[0].mProperties.title);
 			}
 		},
-		
-		_handleValueHelpSearchActType : function (evt) {
+
+		_handleValueHelpSearchActType: function(evt) {
 			var sValue = evt.getParameter("value");
 			var oFilter = new sap.ui.model.Filter(
 				"Ltext",
@@ -477,8 +477,8 @@ sap.ui.define([
 			);
 			evt.getSource().getBinding("items").filter([oFilter]);
 		},
-		
-		_handleValueHelpSearchAbsType : function (evt) {
+
+		_handleValueHelpSearchAbsType: function(evt) {
 			var sValue = evt.getParameter("value");
 			var oFilter = new sap.ui.model.Filter(
 				"Atext",
@@ -489,10 +489,136 @@ sap.ui.define([
 
 		onFileUpload: function(oEvent) {
 			var file = oEvent.mParameters.files[0];
+
+			var filename = file.name;
+			var description = "Information";
+			var ordernumber = this.getView().getModel("WODetModel").oData.Aufnr;
+
+			var contentTypeStr;
+			//var extensionStr = filename.split(".")[1];
+			var extensionStr = filename.split(/\.(?=[^\.]+$)/)[1];
+
+			switch (extensionStr) {
+				case "jpg":
+					contentTypeStr = "image/jpeg";
+					break;
+				case "doc":
+					contentTypeStr = "application/msword";
+					break;
+				case "docx":
+					contentTypeStr = "application/msword";
+					break;
+				case "pdf":
+					contentTypeStr = "application/pdf";
+					break;
+				case "txt":
+					contentTypeStr = "text/plain";
+					break;
+				case "xls":
+					contentTypeStr = "application/vnd.ms-excel";
+					break;
+				case "xlsx":
+					contentTypeStr = "application/vnd.ms-excel";
+					break;
+			}
+
+			// Get csrf token
+			var csrfToken;
+
+			if (!csrfToken) {
+				csrfToken = this.oModel.oHeaders['x-csrf-token'];
+				this.byId("fileUploader").setSendXHR(true);
+				var headerParma = new sap.ui.unified.FileUploaderParameter();
+
+				headerParma.setName('x-csrf-token');
+				headerParma.setValue(csrfToken);
+
+				headerParma.setName('SLUG');
+				headerParma.setValue(filename + "|" + description + "|" + ordernumber);
+
+				headerParma.setName('ContentType');
+				headerParma.setValue(contentTypeStr);
+
+				this.byId("fileUploader").addHeaderParameter(headerParma);
+			}
+			this.byId("fileUploader").upload();
+
+			/*var reader = new FileReader();
+			reader.readAsBinaryString(file);
+			reader.onload = function(readerEvt) {
+				var binaryString = readerEvt.target.result;
+				var cbs = btoa(binaryString);
+				console.log(cbs);
+			};*/
+
+			/*// Define the string
+			var string = 'Hello World!';
+
+			// Encode the String
+			var encodedString = btoa(string);
+			console.log(encodedString); // Outputs: "SGVsbG8gV29ybGQh"
+
+			// Decode the String
+			var decodedString = atob(encodedString);
+			console.log(decodedString); // Outputs: "Hello World!"*/
+
+			this.convetFileToXsting(file);
+			
+
 			var data = {
-				Name: file.name,
-				fileContent: file
+
+				// SLUG: filename + "|" + description + "|" + ordernumber,
+				// ContentType: contentTypeStr,
+				// IS_MEDIA_RESOURCE
+				// MIME_TYPE: contentTypeStr,
+				VALUE: file.base64
 			};
+
+			var that = this;
+
+			//var path = "/AttachmentsSet";
+			var path = "/AttUploadSet";
+			this.oModel.create(path, data, {
+				success: function(odata, responce) {
+					var obj = JSON.parse(responce.headers["sap-message"]);
+					var msg = obj.message;
+					var severity = obj.severity;
+					if (severity.toLowerCase() === "info") {
+						MessageBox.information(msg, {
+							onClose: function(sAction) {
+								that.onBacktoWOMaster();
+								that.MasterRef.bindWorkOrderList();
+							}
+						});
+
+					} else if (severity.toLowerCase() === "success") {
+						MessageBox.success(msg, {
+							onClose: function(sAction) {
+								that.onBacktoWOMaster();
+								that.MasterRef.bindWorkOrderList();
+							}
+						});
+
+					} else if (severity.toLowerCase() === "error") {
+						MessageBox.error(msg, {
+							onClose: function(sAction) {
+
+							}
+						});
+						return;
+					}
+
+				},
+				error: function(error) {
+					var msg = error.statusText;
+					MessageBox.error(msg + ": contact System Administator", {
+						onClose: function(sAction) {
+
+						}
+					});
+				}
+			});
+
 			if (file) {
 				var modelData = this.getView().getModel("WODetModel").getData();
 				modelData.NVHEADERTOATTACHMENTS.results.unshift(data);
@@ -500,6 +626,24 @@ sap.ui.define([
 			}
 
 		},
+		
+		convetFileToXsting: function(file) {
+			// var that = this;
+			// var file = obj.oFile;
+			if (file) {
+				var reader = new FileReader();
+				var BASE64_MARKER = 'data:' + file.type + ';base64,';
+				reader.onload = (function() {
+					return function(evt) {
+						var base64Index = evt.target.result.indexOf(BASE64_MARKER) + BASE64_MARKER.length;
+						var base64Data = evt.target.result.substring(base64Index);
+						file.base64 = base64Data;
+					};
+				})(file);
+			}
+			reader.readAsDataURL(file);
+		},
+
 		onDecumentDelete: function(oEvent) {
 			var index = oEvent.oSource.oParent.oParent.indexOfItem(oEvent.oSource.oParent);
 			this.getView().getModel("WODetModel").oData.NVHEADERTOATTACHMENTS.results.splice(index, 1);
@@ -559,7 +703,8 @@ sap.ui.define([
 			debugger;
 			var bObj = e.oSource.getBindingContext("WODetModel").getObject().Objid;
 			if (bObj) {
-				var url = "https://hved.utl.accenture.com/sap/opu/odata/SAP/ZEAM_066_WM_FIORI_APP_SRV/AttDownloadSet(Objid='" + bObj + "')/$value";
+				var url = "https://hved.utl.accenture.com/sap/opu/odata/SAP/ZEAM_066_WM_FIORI_APP_SRV/AttDownloadSet(Objid='" + bObj +
+					"')/$value";
 				window.open(url);
 				/*	var path = "/AttDownloadSet(Objid='"+bObj+"')/$value";
 					this.oModel.read(path, true, {
